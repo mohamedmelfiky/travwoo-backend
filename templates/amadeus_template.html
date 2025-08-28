@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Electronic Ticket/Itinerary - A4 Print View</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            /* Use a base font size suitable for print */
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 10pt; /* Use points for better print scaling */
+                line-height: 1.4;
+                color: #333;
+                margin: 0;
+                padding: 0; /* Remove padding, rely on container or print margins */
+                background-color: #fff;
+                /* Ensure background prints if needed (browser/PDF generator dependent) */
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .container {
+                /* Set a fixed width close to A4 printable area */
+                /* A4 width = 210mm. Minus ~15mm margins each side = 180mm */
+                /* 180mm is roughly 709px at 96dpi, let's use 750px for a bit more space */
+                width: 750px;
+                margin: 0 auto; /* Center container for viewing, won't affect print */
+                border: 1px solid #ccc; /* Optional: keep border for visual structure */
+                padding: 40px; /* Add generous padding inside container (~15mm) */
+            }
+            h1 {
+                text-align: center;
+                font-size: 16pt; /* Larger heading */
+                margin-top: 0;
+                margin-bottom: 25px; /* More space after heading */
+                font-weight: bold;
+            }
+            p {
+                margin-bottom: 10px;
+                font-size: 10pt; /* Ensure consistent body text size */
+            }
+            .section-header {
+                background-color: #0b3c6f !important; /* Dark blue - use !important if needed */
+                color: white !important;
+                padding: 6px 10px;
+                font-weight: bold;
+                margin-top: 15px;
+                margin-bottom: 0;
+                font-size: 11pt; /* Slightly larger section header */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                /* Ensure background prints */
+                 -webkit-print-color-adjust: exact;
+                 color-adjust: exact;
+            }
+            .section-content {
+                padding: 5px 10px;
+                border: 1px solid #eee;
+                border-top: none;
+                margin-bottom: 15px;
+            }
+            .info-line {
+                display: flex;
+                margin-bottom: 8px;
+                padding: 5px 10px;
+                border: 1px solid #eee;
+                border-top: none;
+                margin-bottom: 15px;
+                flex-wrap: wrap; /* Allow wrapping if needed */
+            }
+            .info-label {
+                font-weight: bold;
+                width: 200px;
+                min-width: 180px; /* Adjust min-width */
+                padding-right: 10px;
+                flex-shrink: 0; /* Prevent label from shrinking */
+            }
+            .info-value {
+                flex-grow: 1;
+                word-break: break-word;
+            }
+
+            .flight-section {
+                margin-top: 20px; /* More spacing */
+                page-break-inside: avoid; /* Try to prevent breaking flight info across pages */
+            }
+
+            .flight-header {
+                 background-color: #0b3c6f !important; /* Dark blue */
+                 color: white !important;
+                 padding: 6px 10px;
+                 font-weight: bold;
+                 font-size: 11pt;
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center;
+                 flex-wrap: wrap;
+                 /* Ensure background prints */
+                 -webkit-print-color-adjust: exact;
+                 color-adjust: exact;
+            }
+            .flight-header .route { flex-grow: 1; min-width: 120px; padding-right: 5px;}
+            .flight-header .date { text-align: center; flex-grow: 2; padding: 0 5px; min-width: 180px; }
+            .flight-header .status { font-weight: bold; text-align: right; flex-grow: 1; min-width: 110px; padding-left: 5px;}
+
+            .flight-details {
+                border: 1px solid #ccc;
+                border-top: none;
+                padding: 15px; /* More padding */
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            .flight-column {
+                width: 48%; /* Keep two columns */
+                min-width: 280px; /* Adjust minimum width */
+                margin-bottom: 10px;
+                 page-break-inside: avoid; /* Try to prevent breaking columns */
+            }
+            /* Remove media query for columns - keep them side-by-side */
+            /* @media (min-width: 600px) { ... } */
+
+            .flight-column p {
+                margin: 0 0 8px 0;
+                word-break: break-word;
+            }
+             .flight-column b {
+                display: inline-block;
+                width: 100px; /* Slightly wider label */
+                vertical-align: top;
+                font-weight: bold;
+             }
+             .flight-column span {
+                 display: inline-block;
+                 width: calc(100% - 105px); /* Adjust calc */
+                 vertical-align: top;
+             }
+
+            .footer {
+                margin-top: 25px;
+                page-break-before: auto; /* Allow page break before footer if needed */
+            }
+
+            /* Print-specific styles (optional but good practice) */
+            @media print {
+                body {
+                    font-size: 9pt; /* Slightly smaller for print density? Test this. */
+                    margin: 0; /* Ensure no body margins for print */
+                }
+                .container {
+                    width: 100%; /* Use full printable width */
+                    border: none; /* Remove border for print */
+                    padding: 0; /* Remove padding, rely on printer margins */
+                    margin: 0;
+                    box-shadow: none;
+                }
+                /* Add more print-specific overrides if needed */
+                .section-header, .flight-header {
+                    /* Ensure backgrounds print reliably */
+                    background-color: #0b3c6f !important;
+                    color: white !important;
+                    -webkit-print-color-adjust: exact;
+                    color-adjust: exact;
+                }
+                /* Hide elements not needed for print if any */
+                /* .no-print { display: none; } */
+            }
+
+        </style>
+    </head>
+    <body>
+        <!-- Ensure container holds all printable content -->
+        <div class="container">
+            <h1>Electronic Ticket/Itinerary</h1>
+
+            <p>Dear Valued Customer,</p>
+            <p>Please find below your detailed itinerary.</p>
+
+            <div class="section-header">TRAVELER(S) INFORMATION</div>
+            <div class="section-content">
+                khafagy / Taghreed Mr
+            </div>
+
+            <!-- Combined Booking/Confirmation info -->
+            <div class="info-line" style="border: 1px solid #eee; margin-top: 15px; flex-direction: column;">
+                <div style="display: flex; margin-bottom: 5px; flex-wrap: wrap;">
+                    <span class="info-label">Booking Reservation No:</span>
+                    <span class="info-value">U3UR6F</span>
+                </div>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <span class="info-label">Airline Confirmation No(S):</span>
+                    <span class="info-value">AF/U3UR6F</span>
+                </div>
+            </div>
+
+
+            <!-- Flight 1: Cairo - Paris -->
+            <div class="flight-section">
+                <div class="flight-header">
+                    <span class="route">Cairo - Paris</span>
+                    <span class="date">Thursday, 17 April, 2025</span>
+                    <span class="status">CONFIRMED</span>
+                </div>
+                <div class="flight-details">
+                    <div class="flight-column">
+                        <p><b>Departure:</b> <span>02:30<br>Cairo, Cairo International Airport</br></span></p>
+                        <p><b>Check-in by:</b> <span>23:30 (Thursday, 17 April, 2025)</span></p>
+                        <p><b>Airline/Flight:</b> <span>Air France AF 551</span></p>
+                        <p><b>Fare Type:</b> <span>Economy</span></p>
+                        <p><b>Baggage:</b> <span>Not Available</span></p>
+                    </div>
+                    <div class="flight-column">
+                        <p><b>Arrival:</b> <span>07:05<br>Paris, Charles de Gaulle Airport</br></span></p>
+                        <p><b>Duration:</b> <span>4h 35m</span></p>
+                        <p><b>Aircraft:</b> <span>Not Available</span></p>
+                        <p><b>On Board:</b> <span>Not Available</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flight 2: Paris - Cairo -->
+            <div class="flight-section">
+                <div class="flight-header">
+                    <span class="route">Paris - Cairo</span>
+                    <span class="date">Monday, 21 April, 2025</span>
+                    <span class="status">CONFIRMED</span>
+                </div>
+                <div class="flight-details">
+                    <div class="flight-column">
+                        <p><b>Departure:</b> <span>20:10<br>Paris, Charles de Gaulle Airport</br></span></p>
+                        <p><b>Check-in by:</b> <span>17:10</span></p>
+                        <p><b>Airline/Flight:</b> <span>Air France AF 570</span></p>
+                        <p><b>Fare Type:</b> <span>Economy</span></p>
+                        <p><b>Baggage:</b> <span>Not Available</span></p>
+                    </div>
+                    <div class="flight-column">
+                        <p><b>Arrival:</b> <span>00:30<br>Cairo, Cairo International Airport</br></span></p>
+                        <p><b>Duration:</b> <span>4h 20m</span></p>
+                        <p><b>Aircraft:</b> <span>Not Available</span></p>
+                        <p><b>On Board:</b> <span>Not Available</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Pleased to serve you.</p>
+                <p>Best Regards</p>
+            </div>
+
+        </div> <!-- End container -->
+    </body>
+</html>

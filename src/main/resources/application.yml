@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: flights
+  datasource:
+    url: jdbc:h2:file:./data/airportdb;AUTO_SERVER=TRUE
+    username: travoo
+    password: travoo
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+#      schema-locations: classpath:schema.sql
+  h2:
+    console:
+      enabled: true
+  thymeleaf:
+    enabled: false
+  cache:
+    cache-names: "amadeus"
+    caffeine:
+      spec: "maximumSize=10000,expireAfterWrite=3d"
+
+amadeus:
+  client-id: hGb49khuhCeI98uDBoVhyCbuCj6RjaYG
+  client-secret: 7rWyYR6nQv8tXif1
+  grant-type: client_credentials
+
+logging:
+  level:
+    org.springframework.cache: trace

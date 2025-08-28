@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Electronic Ticket/Itinerary - A4 Print View</title>
+    <style type="text/css">
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #333333;
+            background-color: #ffffff;
+        }
+
+        .container {
+            width: 750px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 10pt;
+        }
+
+        /* Section styling */
+        .section-header {
+            background-color: #0b3c6f;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 0;
+            font-size: 11pt;
+        }
+
+        .section-content {
+            padding: 5px 10px;
+            border: 1px solid #eeeeee;
+            border-top: none;
+            margin-bottom: 15px;
+        }
+
+        /* Info styling */
+        .info-line {
+            margin-bottom: 8px;
+            padding: 5px 10px;
+            border: 1px solid #eeeeee;
+            border-top: none;
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+
+        .info-row {
+            margin-bottom: 5px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            width: 200px;
+            display: inline-block;
+            padding-right: 10px;
+            vertical-align: top;
+        }
+
+        .info-value {
+            display: inline-block;
+            width: 450px;
+            vertical-align: top;
+        }
+
+        /* Flight section styling */
+        .flight-section {
+            margin-top: 20px;
+            page-break-inside: avoid;
+        }
+
+        .flight-header {
+            background-color: #0b3c6f;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11pt;
+        }
+
+        .flight-route {
+            display: inline-block;
+            width: 25%;
+        }
+
+        .flight-date {
+            display: inline-block;
+            width: 45%;
+            text-align: center;
+        }
+
+        .flight-status {
+            display: inline-block;
+            width: 25%;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .flight-details {
+            border: 1px solid #cccccc;
+            border-top: none;
+            padding: 15px;
+        }
+
+        .flight-column {
+            width: 48%;
+            float: left;
+            margin-bottom: 10px;
+        }
+
+        .flight-column-right {
+            width: 48%;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .flight-column p, .flight-column-right p {
+            margin: 0 0 8px 0;
+        }
+
+        .flight-label {
+            display: inline-block;
+            width: 100px;
+            vertical-align: top;
+            font-weight: bold;
+        }
+
+        .flight-value {
+            display: inline-block;
+            width: 200px;
+            vertical-align: top;
+        }
+
+        .footer {
+            margin-top: 25px;
+            page-break-before: auto;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                font-size: 9pt;
+                margin: 0;
+            }
+
+            .container {
+                width: 100%;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Electronic Ticket/Itinerary</h1>
+
+    <p>Dear Valued Customer,</p>
+    <p>Please find below your detailed itinerary.</p>
+
+    <div class="section-header">TRAVELER(S) INFORMATION</div>
+    <div class="section-content">
+        <div th:each="name : ${names}">
+            <span th:text="${name}">Elfiky / Mohamed Mr</span>
+            <br/>
+        </div>
+    </div>
+
+    <!-- Combined Booking/Confirmation info -->
+    <div class="info-line">
+        <div class="info-row">
+            <span class="info-label">Booking Reservation No:</span>
+            <span class="info-value">U3UR6F</span>
+        </div>
+<!--        <div class="info-row">-->
+<!--            <span class="info-label">Airline Confirmation No(S):</span>-->
+<!--            <span class="info-value">AF/U3UR6F</span>-->
+<!--        </div>-->
+    </div>
+
+    <!-- Flight 1: Cairo - Paris -->
+    <div class="flight-section" th:each="flight : ${flights}">
+        <div class="flight-header">
+            <div class="flight-route" th:text="${flight.route}">Cairo - Paris</div>
+            <div class="flight-date" th:text="${flight.departureDate}">Thursday, 17 April, 2025</div>
+            <div class="flight-status">CONFIRMED</div>
+        </div>
+        <div class="flight-details">
+            <div class="flight-column">
+                <p>
+                    <span class="flight-label">Departure:</span>
+                    <span class="flight-value"
+                          th:utext="${flight.departureTime} + '<br/>' + ${flight.departureAirport}">
+                        02:30<br/>Cairo, Cairo International Airport
+                    </span>
+                </p>
+                <!--                <p><span class="flight-label">Check-in by:</span> <span class="flight-value" th:text="${flight.checkInBy}">23:30 (Thursday, 17 April, 2025)</span>-->
+                <!--                </p>-->
+                <p>
+                    <span class="flight-label">Airline/Flight:</span>
+                    <span class="flight-value"
+                          th:text="${flight.airlineName} + ' ' + ${flight.airlineCode} + ' ' + ${flight.number}"
+                    >
+                        Air France AF 551
+                    </span>
+                </p>
+                <p><span class="flight-label">Fare Type:</span> <span class="flight-value">Economy</span></p>
+                <p>
+                    <span class="flight-label">Baggage:</span>
+                    <span class="flight-value" th:text="${flight.baggage}">Not Available</span>
+                </p>
+            </div>
+            <div class="flight-column-right">
+                <p>
+                    <span class="flight-label">Arrival:</span>
+                    <span class="flight-value" th:utext="${flight.arrivalTime} + '<br/>' + ${flight.arrivalAirport}">
+                        07:05<br/>Paris, Charles de Gaulle Airport
+                    </span>
+                </p>
+                <p>
+                    <span class="flight-label">Duration:</span>
+                    <span class="flight-value" th:text="${flight.duration}">4h 35m</span>
+                </p>
+                <p>
+                    <span class="flight-label">Aircraft:</span>
+                    <span class="flight-value" th:text="${flight.aircraft}">Not Available</span>
+                </p>
+                <!--                <p><span class="flight-label">On Board:</span> <span class="flight-value">Not Available</span></p>-->
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- Flight 2: Paris - Cairo -->
+    <!--    <div class="flight-section">-->
+    <!--        <div class="flight-header">-->
+    <!--            <div class="flight-route">Paris - Cairo</div>-->
+    <!--            <div class="flight-date">Monday, 21 April, 2025</div>-->
+    <!--            <div class="flight-status">CONFIRMED</div>-->
+    <!--        </div>-->
+    <!--        <div class="flight-details">-->
+    <!--            <div class="flight-column">-->
+    <!--                <p><span class="flight-label">Departure:</span> <span class="flight-value">20:10<br />Paris, Charles de Gaulle Airport</span></p>-->
+    <!--                <p><span class="flight-label">Check-in by:</span> <span class="flight-value">17:10</span></p>-->
+    <!--                <p><span class="flight-label">Airline/Flight:</span> <span class="flight-value">Air France AF 570</span></p>-->
+    <!--                <p><span class="flight-label">Fare Type:</span> <span class="flight-value">Economy</span></p>-->
+    <!--                <p><span class="flight-label">Baggage:</span> <span class="flight-value">Not Available</span></p>-->
+    <!--            </div>-->
+    <!--            <div class="flight-column-right">-->
+    <!--                <p><span class="flight-label">Arrival:</span> <span class="flight-value">00:30<br />Cairo, Cairo International Airport</span></p>-->
+    <!--                <p><span class="flight-label">Duration:</span> <span class="flight-value">4h 20m</span></p>-->
+    <!--                <p><span class="flight-label">Aircraft:</span> <span class="flight-value">Not Available</span></p>-->
+    <!--                <p><span class="flight-label">On Board:</span> <span class="flight-value">Not Available</span></p>-->
+    <!--            </div>-->
+    <!--            <div class="clear"></div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <div class="footer">
+        <p>Pleased to serve you.</p>
+        <p>Best Regards</p>
+    </div>
+</div>
+</body>
+</html>
