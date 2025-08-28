@@ -15,15 +15,23 @@ class AirlinesDataLoader(
 
     private val logger = LoggerFactory.getLogger(AirlinesDataLoader::class.java)
 
+    private data class AirlineCsv(
+        val id: String,
+        val name: String,
+        val logo: String,
+    )
+
     override fun run(vararg args: String?) {
         if (airlineRepository.count() == 0L) {
             logger.info("Loading airlines data from JSON...")
             try {
                 val inputStream = ClassPathResource("airlines.json").inputStream
-                val airlines: List<Airline> = mapper.readValue(
+                val airlinesCsv = mapper.readValue(
                     inputStream,
-                    object : TypeReference<List<Airline>>() {}
+                    object : TypeReference<List<AirlineCsv>>() {}
                 )
+
+                val airlines = airlinesCsv.map { Airline(it.id, it.name, it.logo) }
 
                 airlineRepository.insertAll(airlines)
                 logger.info("Successfully loaded ${airlines.size} airlines.")
