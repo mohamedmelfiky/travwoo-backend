@@ -1,10 +1,11 @@
-package com.melfiky.flights
+package com.melfiky.flights.printout
 
 import com.lowagie.text.*
 import com.lowagie.text.Rectangle.*
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
+import com.melfiky.flights.FlightRepresentation
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.thymeleaf.TemplateEngine
@@ -62,7 +63,7 @@ class PrintOutService(
 
         // Title
         val title = Paragraph("Electronic Ticket/Itinerary", titleFont)
-        title.setAlignment(Element.ALIGN_CENTER)
+        title.setAlignment(ALIGN_CENTER)
         title.setSpacingAfter(15F)
         document.add(title)
 
@@ -143,7 +144,7 @@ class PrintOutService(
         val cell = PdfPCell(Phrase(text, font))
         cell.setBackgroundColor(Color(11, 60, 111))
         cell.setPadding(6F)
-        cell.setBorder(Rectangle.NO_BORDER)
+        cell.setBorder(NO_BORDER)
         table.setWidthPercentage(100F)
         table.addCell(cell)
         doc.add(table)
@@ -181,8 +182,8 @@ class PrintOutService(
         for (cell in arrayOf(routeCell, dateCell, statusCell)) {
             cell.setBackgroundColor(Color(11, 60, 111))
             cell.setPadding(6f)
-            cell.horizontalAlignment = Element.ALIGN_CENTER
-            cell.setVerticalAlignment(Element.ALIGN_MIDDLE)
+            cell.horizontalAlignment = ALIGN_CENTER
+            cell.setVerticalAlignment(ALIGN_MIDDLE)
         }
 
         headerTable.addCell(routeCell)

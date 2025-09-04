@@ -1,4 +1,6 @@
-package com.melfiky.flights
+package com.melfiky.flights.printout
+
+import com.melfiky.flights.FlightsController
 
 data class PrintoutRequest(
     val offerId: String,

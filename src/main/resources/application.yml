@@ -28,3 +28,5 @@ amadeus:
 logging:
   level:
     org.springframework.cache: trace
+  file:
+    name: logs/application.log
