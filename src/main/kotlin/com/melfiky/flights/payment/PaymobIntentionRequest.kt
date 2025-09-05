@@ -28,4 +28,6 @@ data class PaymobIntentionRequest(
     @param:JsonProperty(value = "redirection_url")
     val redirectionUrl: String = "tayyarny://close",
     val items: List<PaymobIntentionItem> = listOf(),
+    @param:JsonProperty(value = "special_reference")
+    val reference: String
 )

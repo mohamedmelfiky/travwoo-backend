@@ -11,7 +11,12 @@ class PaymentController(
 
     @PostMapping("v1/payment/intention")
     fun intention(@RequestBody intention: IntentionRequest): IntentionResponse {
-        return paymentService.intention(intention.passengersCount, intention.billingData)
+        return paymentService.intention(intention)
+    }
+
+    @PostMapping("v1/payment/webhook")
+    fun webhook(@RequestBody webhook: PaymentWebhook) {
+        paymentService.onWebhook(webhook)
     }
 
 }
