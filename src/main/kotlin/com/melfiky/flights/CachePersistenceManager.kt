@@ -53,7 +53,7 @@ class CachePersistenceManager(
                 // If not a SimpleKey format, just use the string key
                 // Convert LinkedHashMap to FlightOffersSearchResponse if needed
                 val convertedValue = convertValueIfNeeded(value)
-                val tripRequest = mapper.readValue<FlightsController.TripRequest>(keyStr)
+                val tripRequest = mapper.readValue<TripRequest>(keyStr)
                 val response = mapper.convertValue<FlightResponse>(value)
                 caffeineCache.put(tripRequest, response)
 //            }

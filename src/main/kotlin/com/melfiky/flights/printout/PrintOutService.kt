@@ -2,32 +2,22 @@ package com.melfiky.flights.printout
 
 import com.lowagie.text.*
 import com.lowagie.text.Rectangle.*
-import com.lowagie.text.pdf.PdfPCell
-import com.lowagie.text.pdf.PdfPTable
-import com.lowagie.text.pdf.PdfWriter
 import com.melfiky.flights.AmadeusService
 import com.melfiky.flights.FlightRepresentation
-import com.melfiky.flights.FlightsController.TripRequest
+import com.melfiky.flights.TripRequest
 import com.melfiky.flights.payment.IntentionRequest
 import com.melfiky.flights.payment.PaymentNotFoundException
-import com.melfiky.flights.payment.PaymentNotSuccessException
 import com.melfiky.flights.payment.PaymentRepository
-import com.melfiky.flights.payment.PaymentStatus
 import com.melfiky.flights.toFlightRepresentation
 import org.slf4j.LoggerFactory
-import org.springframework.core.io.InputStreamResource
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
 import org.xhtmlrenderer.pdf.ITextRenderer
 import org.xhtmlrenderer.resource.XMLResource
-import java.awt.Color
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.io.StringReader
 import java.util.*
 

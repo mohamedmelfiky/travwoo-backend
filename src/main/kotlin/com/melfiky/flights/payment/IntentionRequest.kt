@@ -1,10 +1,10 @@
 package com.melfiky.flights.payment
 
-import com.melfiky.flights.FlightsController
+import com.melfiky.flights.Leg
 
 data class IntentionRequest(
     val offerId: String,
-    val legs: List<FlightsController.Leg>,
+    val legs: List<Leg>,
     val passengers: List<PassengerData>,
     val billingData: BillingData
 )

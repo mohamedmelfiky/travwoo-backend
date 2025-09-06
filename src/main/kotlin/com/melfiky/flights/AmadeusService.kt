@@ -1,6 +1,5 @@
 package com.melfiky.flights
 
-import com.melfiky.flights.FlightsController.TripRequest
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -40,6 +39,24 @@ class AmadeusService(
 
     @Cacheable("amadeus")
     fun multiCityFlightOffers(request: TripRequest): FlightResponse {
+        return if (request.isMultiCity()) multiCityRequest(request) else normalRequest(request)
+    }
+
+    private fun normalRequest(request: TripRequest): FlightResponse {
+        val leg = request.legs.first()
+        val returnDate = request.legs.getOrNull(1)?.departureDate
+        val response = amadeusApi.getFlights(
+            origin = leg.origin,
+            destination = leg.destination,
+            departureDate = leg.departureDate,
+            returnDate = returnDate,
+            nonStop = false,
+            adults = 1
+        )
+        return response.toFlightResponse(airports, airlines, aircraft)
+    }
+
+    private fun multiCityRequest(request: TripRequest): FlightResponse {
         val offersRequest = MultiCityRequest(
             originDestinations = request.legs.map { leg ->
                 OriginDestination(

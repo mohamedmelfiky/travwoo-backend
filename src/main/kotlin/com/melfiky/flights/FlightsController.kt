@@ -11,13 +11,7 @@ import java.util.UUID
 
 
 @RestController
-class FlightsController(
-    private val amadeusService: AmadeusService,
-    private val printOutService: PrintOutService,
-    private val airportRepository: AirportRepository,
-    private val airlineRepository: AirlineRepository,
-    private val aircraftRepository: AircraftRepository
-) {
+class FlightsController(private val amadeusService: AmadeusService) {
 
     private val logger = LoggerFactory.getLogger(AmadeusService::class.java)
 
@@ -36,17 +30,6 @@ class FlightsController(
             returnDate
         )
     }
-
-    data class TripRequest(
-        val legs: List<Leg>
-    )
-
-    data class Leg(
-        val id: Int,
-        val origin: String,
-        val destination: String,
-        val departureDate: String,
-    )
 
     @PostMapping("v2/shopping/flight-offers")
     fun findTrips(@RequestBody request: TripRequest): FlightResponse {
